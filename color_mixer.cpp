@@ -1,51 +1,46 @@
-// color_mixer.cpp
-// Mixes two primary colors (red, blue, yellow) and displays the result.
+// bmi.cpp
+// Calculates body mass index (BMI) from weight in pounds and height in inches.
 #include <iostream>
 #include <iomanip>
-#include <cstring>
 using namespace std;
  
 int main()
 {
-    const int COLOR_SIZE = 20;
-    char first_color[COLOR_SIZE];
-    char second_color[COLOR_SIZE];
+    double weight_pounds;
+    double height_inches;
+    double bmi;
  
-    cout << "Enter the first primary color (red, blue, or yellow): ";
-    cin >> setw(COLOR_SIZE) >> first_color;
-    cout << "Enter the second primary color (red, blue, or yellow): ";
-    cin >> setw(COLOR_SIZE) >> second_color;
+    cout << "Enter your weight in pounds: ";
+    cin >> weight_pounds;
+    cout << "Enter your height in inches: ";
+    cin >> height_inches;
  
-    // strcmp returns 0 when the two C-strings match.
-    bool first_is_valid = strcmp(first_color, "red") == 0 ||
-                          strcmp(first_color, "blue") == 0 ||
-                          strcmp(first_color, "yellow") == 0;
-    bool second_is_valid = strcmp(second_color, "red") == 0 ||
-                           strcmp(second_color, "blue") == 0 ||
-                           strcmp(second_color, "yellow") == 0;
+    // Both values must be positive, so stop before calculating if either is not.
+    if (weight_pounds <= 0 || height_inches <= 0)
+    {
+        cout << "Error: weight and height must be positive." << endl;
+        return 1;
+    }
  
-    if (!first_is_valid || !second_is_valid)
+    // Use height * height to square the height (^ is not exponentiation in C++).
+    bmi = weight_pounds * 703.0 / (height_inches * height_inches);
+ 
+    // Formatting only changes the display, not the stored value.
+    cout << fixed << setprecision(2);
+    cout << "Your BMI is: " << bmi << endl;
+ 
+    // The category is chosen using the unrounded BMI.
+    if (bmi < 18.5)
     {
-        cout << "Error: both colors must be red, blue, or yellow." << endl;
+        cout << "Category: Underweight" << endl;
     }
-    else if (strcmp(first_color, second_color) == 0)
+    else if (bmi <= 25.0)
     {
-        cout << "Mixed color: " << first_color << endl;
-    }
-    else if ((strcmp(first_color, "red") == 0 && strcmp(second_color, "blue") == 0) ||
-             (strcmp(first_color, "blue") == 0 && strcmp(second_color, "red") == 0))
-    {
-        cout << "Mixed color: purple" << endl;
-    }
-    else if ((strcmp(first_color, "red") == 0 && strcmp(second_color, "yellow") == 0) ||
-             (strcmp(first_color, "yellow") == 0 && strcmp(second_color, "red") == 0))
-    {
-        cout << "Mixed color: orange" << endl;
+        cout << "Category: Optimal weight" << endl;
     }
     else
     {
-        // The only remaining valid pair is blue and yellow, in either order.
-        cout << "Mixed color: green" << endl;
+        cout << "Category: Overweight" << endl;
     }
  
     return 0;
