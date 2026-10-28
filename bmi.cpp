@@ -18,7 +18,7 @@ int main()
     // Both values must be positive, so stop before calculating if either is not.
     if (weight_pounds <= 0 || height_inches <= 0)
     {
-        cout << "Error: weight and height must both be greater than zero." << endl;
+        cout << "Error: weight and height must be positive." << endl;
         return 1;
     }
  
